@@ -1,0 +1,10 @@
+mysql:
+    username: ${DATABASE_MYSQL_USERNAME:root}
+    password: ${DATABASE_MYSQL_PASSWORD:root}
+    schema: pagbank_challenge
+    url: ${DATABASE_MYSQL_URL:localhost:3312}
+spring:
+    jpa:
+        show-sql: false
+        hidernate:
+            ddl-auto: none

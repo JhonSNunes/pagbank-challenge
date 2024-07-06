@@ -1,0 +1,12 @@
+mysql:
+    username: root
+    password: root
+    schema: pagbank_challenge
+    url: localhost:3312
+
+server:
+    port: 8080
+    undertow:
+        threads:
+            worker: 10
+            io: 2

@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.flywaydb:flyway-mysql:10.15.2'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'application'
+    id "org.springframework.boot" version "3.3.1"
+    id "io.spring.dependency-management" version "1.1.5"
+    id "org.flywaydb.flyway" version "10.15.2"
+}
+
+group = 'com.pagbank.challenge.infrastructure'
+version = '1.0-SNAPSHOT'
+
+bootJar {
+    archiveFileName = 'application.jar'
+    destinationDirectory.set(file(layout.buildDirectory.dir('libs')))
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation(project(":domain"))
+    implementation(project(":application"))
+
+    implementation 'com.mysql:mysql-connector-j'
+
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        exclude module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+
+    testImplementation 'org.flywaydb:flyway-core'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    testRuntimeOnly 'com.h2database:h2'
+}
+
+flyway {
+    url = System.getenv('FLYWAY_DB') ?: 'jdbc:mysql://localhost:3312/pagbank_challenge';
+    user = System.getenv('FLYWAY_DB') ?: 'root';
+    password = System.getenv('FLYWAY_DB') ?: 'root'
+    cleanDisabled = false
+}
+
+test {
+    useJUnitPlatform()
+}

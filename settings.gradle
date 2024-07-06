@@ -1,0 +1,5 @@
+rootProject.name = 'pagbank-challenge'
+include 'domain'
+include 'application'
+include 'infrastructure'
+

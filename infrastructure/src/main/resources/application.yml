@@ -1,0 +1,31 @@
+server:
+    port: 8080
+    compression:
+        enabled: true
+        mime-types: text/html, text/xml, text/plain, text/css, text/javascript, application/javascript, application/json
+        min-response-size: 1024
+    undertow:
+        threads:
+            worker: 64
+            io: 4
+spring:
+    datasource:
+        url: jdbc:mysql://${mysql.url}/${mysql.schema}?useSSL=true&serverTimezone=UTC&characterEncoding=UTF-8
+        username: ${mysql.username}
+        password: ${mysql.password}
+        hikari:
+            auto-commit: false
+            connection-timout: 250 # Tempo em milissegundos
+            max-lifetime: 600000 # Tempo em milissegundos - 10 minutos
+            maximum-pool-size: 20 # Máximo de conexções
+            minimum-idle: 10 # Mínimo de conexões
+            pool-name: master
+    jpa:
+        open-in-view: false
+        show-sql: true
+        hidernate:
+            ddl-auto: none
+        properties:
+            "[hibernate.dialect]": org.hibernate.dialect.MySQLDialect
+            "[hibernate.generate_statistics]": false
+            "[hibernate.connection.provider.disables_autocommit]": true
