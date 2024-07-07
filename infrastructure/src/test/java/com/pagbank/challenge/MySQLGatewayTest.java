@@ -1,4 +1,4 @@
-package com.pagbank.challenge.infrastructure;
+package com.pagbank.challenge;
 
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -4,6 +4,7 @@ import com.pagbank.challenge.domain.AggregateRoot;
 import com.pagbank.challenge.domain.validation.ValidationHandler;
 
 import java.time.Instant;
+import java.util.Objects;
 
 public class Customer extends AggregateRoot<CustomerID> implements Cloneable {
     private String name;
@@ -50,8 +51,8 @@ public class Customer extends AggregateRoot<CustomerID> implements Cloneable {
         this.number = number;
         this.zipcode = zipcode;
         this.active = active;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = Objects.requireNonNull(createdAt);
+        this.updatedAt = Objects.requireNonNull(updatedAt);
         this.deletedAt = deletedAt;
     }
 

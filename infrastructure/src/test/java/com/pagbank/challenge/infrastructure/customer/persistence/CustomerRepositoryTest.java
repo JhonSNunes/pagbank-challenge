@@ -1,8 +1,7 @@
 package com.pagbank.challenge.infrastructure.customer.persistence;
 
 import com.pagbank.challenge.domain.customer.Customer;
-import com.pagbank.challenge.domain.customer.CustomerID;
-import com.pagbank.challenge.infrastructure.MySQLGatewayTest;
+import com.pagbank.challenge.MySQLGatewayTest;
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
