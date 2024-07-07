@@ -17,7 +17,8 @@ public class ProductTest {
 
         final var product = Product.createProduct(
                 expectedName,
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
 
         Assertions.assertNotNull(product);
@@ -30,12 +31,14 @@ public class ProductTest {
     public void givenAInvalidNullName_whenCallNewProductAndValidate_thenShouldReceiveError() {
         final String expectedName = null;
         final var expectedRate = new BigDecimal("110");
+        final var expectedIsActive = true;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'name' should not be null";
 
         final var product = Product.createProduct(
                 expectedName,
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
 
         Assertions.assertNotNull(product);
@@ -52,12 +55,14 @@ public class ProductTest {
     public void givenAInvalidNullRate_whenCallNewProductAndValidate_thenShouldReceiveError() {
         final var expectedName = "CDB 110%";
         final BigDecimal expectedRate = null;
+        final var expectedIsActive = true;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'rate' should not be null";
 
         final var product = Product.createProduct(
                 expectedName,
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
 
         Assertions.assertNotNull(product);
@@ -74,12 +79,14 @@ public class ProductTest {
     public void givenAValidInvalidNegativeRate_whenCallNewProductAndValidate_thenShouldReceiveError() {
         final var expectedName = "CDB 110%";
         final var expectedRate = new BigDecimal("-1");
+        final var expectedIsActive = true;
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'rate' must be greather than zero!";
+        final var expectedErrorMessage = "'rate' must be greather or equal than zero!";
 
         final var product = Product.createProduct(
                 expectedName,
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
 
         Assertions.assertNotNull(product);
@@ -96,18 +103,21 @@ public class ProductTest {
     public void givenAValidProduct_whenCallActivate_thenShouldActivateProduct() {
         final var expectedName = "CDB 110%";
         final BigDecimal expectedRate = new BigDecimal("110.00");
-        final var expectedIsActive = true;
+        final var expectedIsActive = false;
 
         final var product = Product.createProduct(
                 expectedName,
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
         final var createdAt = product.getCreatedAt();
         final var updatedAt = product.getUpdatedAt();
 
+        Assertions.assertFalse(product.isActive());
+
         product.activate();
 
-        Assertions.assertEquals(expectedIsActive, product.isActive());
+        Assertions.assertTrue(product.isActive());
         Assertions.assertEquals(createdAt, product.getCreatedAt());
         Assertions.assertTrue(product.getUpdatedAt().isAfter(updatedAt));
         Assertions.assertNull(product.getDeletedAt());
@@ -116,11 +126,13 @@ public class ProductTest {
     @Test
     public void givenAValidProduct_whenCallDeactivate_thenShouldInactivateProduct() {
         final var expectedName = "CDB 110%";
+        final var expectedIsActive = true;
         final BigDecimal expectedRate = new BigDecimal("110.00");
 
         final var product = Product.createProduct(
                 expectedName,
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
         final var createdAt = product.getCreatedAt();
         final var updatedAt = product.getUpdatedAt();
@@ -139,11 +151,13 @@ public class ProductTest {
     @Test
     public void givenAValidActiveCustomer_whenCallUpdate_thenReturnCustomerUpdated() {
         final var expectedName = "CDB 110%";
+        final var expectedIsActive = true;
         final BigDecimal expectedRate = new BigDecimal("110.00");
 
         final var product = Product.createProduct(
                 "Um nome todo errado",
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
 
         Assertions.assertNotNull(product);
@@ -157,7 +171,8 @@ public class ProductTest {
 
         final var updatedProduct = product.update(
                 expectedName,
-                expectedRate
+                expectedRate,
+                expectedIsActive
         );
 
         Assertions.assertNotNull(updatedProduct);

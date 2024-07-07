@@ -18,10 +18,11 @@ public class OrderTest {
         final var expectedAmount = new BigDecimal("1045.35");
         final var expectedTransactionType = OrderTransactionType.BUY;
 
-        final var order = Order.createBuyOrder(
+        final var order = Order.createOrder(
                 expectedCustomer,
                 expectedProduct,
-                expectedAmount
+                expectedAmount,
+                expectedTransactionType
         );
 
         Assertions.assertNotNull(order);
@@ -33,38 +34,19 @@ public class OrderTest {
     }
 
     @Test
-    public void givenAValidParams_whenCallNewSellOrder_thenInstantiateAOrder() {
-        final var expectedCustomer = CustomerID.unique();
-        final var expectedProduct = ProductID.unique();
-        final var amount = new BigDecimal("1045.35");
-        final var transactionType = OrderTransactionType.SELL;
-
-        final var order = Order.createSellOrder(
-                expectedCustomer,
-                expectedProduct,
-                amount
-        );
-
-        Assertions.assertNotNull(order);
-        Assertions.assertEquals(expectedCustomer, order.getCustomerId());
-        Assertions.assertEquals(expectedProduct, order.getProductId());
-        Assertions.assertEquals(amount, order.getAmount());
-        Assertions.assertNotNull(order.getTransactionDate());
-        Assertions.assertEquals(transactionType, order.getTransactionType());
-    }
-
-    @Test
-    public void givenAInvalidNullCustomerId_whenCallCreateBuyOrder_thenShouldReceiveError() {
+    public void givenAInvalidNullCustomerId_whenCallCreateOrder_thenShouldReceiveError() {
         final CustomerID expectedCustomer = null;
         final var expectedProduct = ProductID.unique();
-        final var amount = new BigDecimal("1045.35");
+        final var expectedAmount = new BigDecimal("1045.35");
+        final var expectedTransactionType = OrderTransactionType.SELL;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'customerId' should not be null";
 
-        final var order = Order.createBuyOrder(
+        final var order = Order.createOrder(
                 expectedCustomer,
                 expectedProduct,
-                amount
+                expectedAmount,
+                expectedTransactionType
         );
 
         Assertions.assertNotNull(order);
@@ -78,41 +60,19 @@ public class OrderTest {
     }
 
     @Test
-    public void givenAInvalidNullCustomerId_whenCallCreateSellOrder_thenShouldReceiveError() {
-        final CustomerID expectedCustomer = null;
-        final var expectedProduct = ProductID.unique();
-        final var amount = new BigDecimal("1045.35");
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'customerId' should not be null";
-
-        final var order = Order.createSellOrder(
-                expectedCustomer,
-                expectedProduct,
-                amount
-        );
-
-        Assertions.assertNotNull(order);
-
-        final var notification = Notification.create();
-
-        order.validate(notification);
-
-        Assertions.assertEquals(expectedErrorMessage, notification.getFirst().message());
-        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
-    }
-
-    @Test
-    public void givenAInvalidNullProductId_whenCallCreateBuyOrder_thenShouldReceiveError() {
+    public void givenAInvalidNullProductId_whenCallCreateOrder_thenShouldReceiveError() {
         final var expectedCustomer = CustomerID.unique();
         final ProductID expectedProduct = null;
-        final var amount = new BigDecimal("1045.35");
+        final var expectedAmount = new BigDecimal("1045.35");
+        final var expectedTransactionType = OrderTransactionType.BUY;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'productId' should not be null";
 
-        final var order = Order.createBuyOrder(
+        final var order = Order.createOrder(
                 expectedCustomer,
                 expectedProduct,
-                amount
+                expectedAmount,
+                expectedTransactionType
         );
 
         Assertions.assertNotNull(order);
@@ -126,41 +86,19 @@ public class OrderTest {
     }
 
     @Test
-    public void givenAInvalidNullProductId_whenCallCreateSellOrder_thenShouldReceiveError() {
-        final var expectedCustomer = CustomerID.unique();
-        final ProductID expectedProduct = null;
-        final var amount = new BigDecimal("1045.35");
-        final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'productId' should not be null";
-
-        final var order = Order.createSellOrder(
-                expectedCustomer,
-                expectedProduct,
-                amount
-        );
-
-        Assertions.assertNotNull(order);
-
-        final var notification = Notification.create();
-
-        order.validate(notification);
-
-        Assertions.assertEquals(expectedErrorMessage, notification.getFirst().message());
-        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
-    }
-
-    @Test
-    public void givenAInvalidNullNegativeAmount_whenCallCreateBuyOrder_thenShouldReceiveError() {
+    public void givenAInvalidNullNegativeAmount_whenCallCreateOrder_thenShouldReceiveError() {
         final var expectedCustomer = CustomerID.unique();
         final var expectedProduct = ProductID.unique();
-        final var amount = new BigDecimal("-1");
+        final var expectedAmount = new BigDecimal("-1");
+        final var expectedTransactionType = OrderTransactionType.BUY;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'amount' must be greather or equal than zero!";
 
-        final var order = Order.createSellOrder(
+        final var order = Order.createOrder(
                 expectedCustomer,
                 expectedProduct,
-                amount
+                expectedAmount,
+                expectedTransactionType
         );
 
         Assertions.assertNotNull(order);

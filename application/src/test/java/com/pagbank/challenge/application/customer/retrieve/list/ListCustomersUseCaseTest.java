@@ -33,7 +33,6 @@ public class ListCustomersUseCaseTest {
         Mockito.reset(customerGateway);
     }
 
-    // 1. Teste do caminho feliz
     @Test
     public void givenAValidQuery_whenCallsListCustomers_shouldReturnCustomer() {
         final var expectedPage = 0;
@@ -89,7 +88,6 @@ public class ListCustomersUseCaseTest {
         Assertions.assertEquals(customers.size(), actualResult.total());
     }
 
-    // 2. Teste atualizar cliente com ID inválido
     @Test
     public void givenAValidQuery_whenHasNoResults_shouldReturnEmptyCustomers() {
         final var expectedPage = 0;

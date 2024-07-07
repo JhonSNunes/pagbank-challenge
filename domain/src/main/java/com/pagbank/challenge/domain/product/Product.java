@@ -35,11 +35,11 @@ public class Product extends AggregateRoot<ProductID> implements Cloneable {
 
     public static Product createProduct(
             final String name,
-            final BigDecimal rate
+            final BigDecimal rate,
+            final Boolean isActive
     ) {
         Instant now = Instant.now();
         ProductID id = ProductID.unique();
-        Boolean isActive = true;
 
         return new Product(id, name, rate, isActive, now, now, null);
     }
@@ -56,11 +56,22 @@ public class Product extends AggregateRoot<ProductID> implements Cloneable {
         return new Product(id, name, rate, isActive, createdAt, updatedAtAt, deletedAtAt);
     }
 
-    public Product update(final String name, final BigDecimal rate) {
+    public Product update(
+            final String name,
+            final BigDecimal rate,
+            final Boolean isActive
+    ) {
         Instant now = Instant.now();
+
+        if (isActive) {
+            activate();
+        } else {
+            deactivate();
+        }
 
         this.name = name;
         this.rate = rate;
+        this.active = isActive;
 
         this.updatedAt = now;
 

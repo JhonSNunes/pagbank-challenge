@@ -34,26 +34,16 @@ public class Order extends AggregateRoot<OrderID> implements Cloneable {
         this.transactionType = Objects.requireNonNull(transactionType);
     }
 
-    public static Order createSellOrder(
+    public static Order createOrder(
             final CustomerID customerId,
             final ProductID productId,
-            final BigDecimal amount
+            final BigDecimal amount,
+            final OrderTransactionType orderTransactionType
     ) {
         OrderID id = OrderID.unique();
         Instant transactionDate = Instant.now();
 
-        return new Order(id, customerId, productId, amount, transactionDate, OrderTransactionType.SELL);
-    }
-
-    public static Order createBuyOrder(
-            final CustomerID customerId,
-            final ProductID productId,
-            final BigDecimal amount
-    ) {
-        OrderID id = OrderID.unique();
-        Instant transactionDate = Instant.now();
-
-        return new Order(id, customerId, productId, amount, transactionDate, OrderTransactionType.BUY);
+        return new Order(id, customerId, productId, amount, transactionDate, orderTransactionType);
     }
 
     public static Order with(
