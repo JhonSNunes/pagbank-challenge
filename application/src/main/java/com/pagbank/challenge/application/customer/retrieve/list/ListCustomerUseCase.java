@@ -4,5 +4,5 @@ import com.pagbank.challenge.application.UseCase;
 import com.pagbank.challenge.domain.customer.CustomerSearchQuery;
 import com.pagbank.challenge.domain.pagination.Pagination;
 
-public abstract class CustomerListUseCase extends UseCase<CustomerSearchQuery, Pagination<CustomerListOutput>> {
+public abstract class ListCustomerUseCase extends UseCase<CustomerSearchQuery, Pagination<ListCustomerOutput>> {
 }

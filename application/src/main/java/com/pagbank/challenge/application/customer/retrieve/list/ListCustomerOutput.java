@@ -5,7 +5,7 @@ import com.pagbank.challenge.domain.customer.CustomerID;
 
 import java.time.Instant;
 
-public record CustomerListOutput(
+public record ListCustomerOutput(
         CustomerID id,
         String name,
         Integer age,
@@ -22,8 +22,8 @@ public record CustomerListOutput(
         Instant updatedAt,
         Instant deletedAt
 ) {
-    public static CustomerListOutput from(final Customer customer) {
-        return new CustomerListOutput(
+    public static ListCustomerOutput from(final Customer customer) {
+        return new ListCustomerOutput(
                 customer.getId(),
                 customer.getName(),
                 customer.getAge(),

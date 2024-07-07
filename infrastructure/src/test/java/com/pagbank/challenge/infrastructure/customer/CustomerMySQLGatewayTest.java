@@ -313,7 +313,7 @@ public class CustomerMySQLGatewayTest {
         final var actualResult = customerMySQLGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
         Assertions.assertEquals(customer3.getId(), actualResult.items().getFirst().getId());
@@ -331,7 +331,7 @@ public class CustomerMySQLGatewayTest {
         final var actualResult = customerMySQLGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(0, actualResult.items().size());
     }
@@ -361,7 +361,7 @@ public class CustomerMySQLGatewayTest {
 
         // Page 0
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
         Assertions.assertEquals(customer3.getId(), actualResult.items().getFirst().getId());
@@ -373,7 +373,7 @@ public class CustomerMySQLGatewayTest {
         actualResult = customerMySQLGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
         Assertions.assertEquals(customer1.getId(), actualResult.items().getFirst().getId());
@@ -385,7 +385,7 @@ public class CustomerMySQLGatewayTest {
         actualResult = customerMySQLGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
         Assertions.assertEquals(customer2.getId(), actualResult.items().getFirst().getId());
@@ -415,7 +415,7 @@ public class CustomerMySQLGatewayTest {
         final var actualResult = customerMySQLGateway.findAll(query);
 
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
         Assertions.assertEquals(customer2.getId(), actualResult.items().getFirst().getId());

@@ -54,7 +54,7 @@ public class CustomerMySQLGateway implements CustomerGateway {
         // Paginação
         final var page = PageRequest.of(
                 query.page(),
-                query.itemsPerPage(),
+                query.perPage(),
                 Sort.by(Sort.Direction.fromString(query.direction()), query.sort())
         );
 

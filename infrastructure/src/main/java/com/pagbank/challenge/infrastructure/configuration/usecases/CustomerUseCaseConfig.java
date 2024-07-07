@@ -6,8 +6,8 @@ import com.pagbank.challenge.application.customer.delete.DefaultDeleteCustomerUs
 import com.pagbank.challenge.application.customer.delete.DeleteCustomerUseCase;
 import com.pagbank.challenge.application.customer.retrieve.get.DefaultGetCustomerByIdUseCase;
 import com.pagbank.challenge.application.customer.retrieve.get.GetCustomerByIdUseCase;
-import com.pagbank.challenge.application.customer.retrieve.list.CustomerListUseCase;
-import com.pagbank.challenge.application.customer.retrieve.list.DefaultCustomerListUseCase;
+import com.pagbank.challenge.application.customer.retrieve.list.ListCustomerUseCase;
+import com.pagbank.challenge.application.customer.retrieve.list.DefaultListCustomerUseCase;
 import com.pagbank.challenge.application.customer.update.DefaultUpdateCustomerUseCase;
 import com.pagbank.challenge.application.customer.update.UpdateCustomerUseCase;
 import com.pagbank.challenge.domain.customer.CustomerGateway;
@@ -43,7 +43,7 @@ public class CustomerUseCaseConfig {
     }
 
     @Bean
-    public CustomerListUseCase customerListUseCase() {
-        return new DefaultCustomerListUseCase(this.customerGateway);
+    public ListCustomerUseCase customerListUseCase() {
+        return new DefaultListCustomerUseCase(this.customerGateway);
     }
 }

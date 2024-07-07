@@ -33,49 +33,49 @@ public class CreateCustomerUseCaseTest {
 
     @Test
     public void givenAValidCommand_whenCallsCreateCustomer_shouldReturnCustomerId() {
-        final var expectedName = "José";
-        final var expectedAge = 33;
-        final var expectedGenre = "masculino";
-        final var expectedPhone = "(47) 99900-3333";
-        final var expectedCity = "Joinville";
-        final var expectedState = "Santa Catarina";
-        final var expectedCountry = "Brasil";
-        final var expectedAddress = "Rua teste da silva";
-        final var expectedNumber = "232333";
-        final var expectedZipcode = "895952225";
-        final var expectedIsActive = true;
+            final var expectedName = "José";
+            final var expectedAge = 33;
+            final var expectedGenre = "masculino";
+            final var expectedPhone = "(47) 99900-3333";
+            final var expectedCity = "Joinville";
+            final var expectedState = "Santa Catarina";
+            final var expectedCountry = "Brasil";
+            final var expectedAddress = "Rua teste da silva";
+            final var expectedNumber = "232333";
+            final var expectedZipcode = "895952225";
+            final var expectedIsActive = true;
 
-        final var command = CreateCustomerCommand.with(
-                expectedName,
-                expectedAge,
-                expectedGenre,
-                expectedPhone,
-                expectedCity,
-                expectedState,
-                expectedCountry,
-                expectedAddress,
-                expectedNumber,
-                expectedZipcode
-        );
+            final var command = CreateCustomerCommand.with(
+                    expectedName,
+                    expectedAge,
+                    expectedGenre,
+                    expectedPhone,
+                    expectedCity,
+                    expectedState,
+                    expectedCountry,
+                    expectedAddress,
+                    expectedNumber,
+                    expectedZipcode
+            );
 
-        when(customerGateway.create(any()))
-                .thenAnswer(returnsFirstArg());
+            when(customerGateway.create(any()))
+                    .thenAnswer(returnsFirstArg());
 
-        final var actualOutput = useCase.execute(command).get();
-        Assertions.assertNotNull(actualOutput);
-        Assertions.assertNotNull(actualOutput.id());
+            final var actualOutput = useCase.execute(command).get();
+            Assertions.assertNotNull(actualOutput);
+            Assertions.assertNotNull(actualOutput.id());
 
-        Mockito.verify(customerGateway, times(1)).create(Mockito.argThat(
-                customer -> {
-                    return Objects.equals(expectedName, customer.getName())
-                            && Objects.equals(expectedAge, customer.getAge())
-                            && Objects.nonNull(customer.getId())
-                            && Objects.nonNull(customer.getCreatedAt())
-                            && Objects.nonNull(customer.getUpdatedAt())
-                            && Objects.isNull(customer.getDeletedAt())
-                            && Objects.equals(expectedIsActive, customer.isActive());
-                }
-        ));
+            Mockito.verify(customerGateway, times(1)).create(Mockito.argThat(
+                    customer -> {
+                        return Objects.equals(expectedName, customer.getName())
+                                && Objects.equals(expectedAge, customer.getAge())
+                                && Objects.nonNull(customer.getId())
+                                && Objects.nonNull(customer.getCreatedAt())
+                                && Objects.nonNull(customer.getUpdatedAt())
+                                && Objects.isNull(customer.getDeletedAt())
+                                && Objects.equals(expectedIsActive, customer.isActive());
+                    }
+            ));
     }
 
     @Test

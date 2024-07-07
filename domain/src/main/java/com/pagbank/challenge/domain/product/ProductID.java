@@ -1,28 +1,28 @@
-package com.pagbank.challenge.domain.customer;
+package com.pagbank.challenge.domain.product;
 
 import com.pagbank.challenge.domain.Identifier;
 
 import java.util.Objects;
 import java.util.UUID;
 
-public class CustomerID extends Identifier {
+public class ProductID extends Identifier {
     private final String value;
 
-    private CustomerID(final String value) {
+    private ProductID(final String value) {
         Objects.requireNonNull(value);
         this.value = value;
     }
 
-    public static CustomerID unique() {
-        return CustomerID.from(UUID.randomUUID());
+    public static ProductID unique() {
+        return ProductID.from(UUID.randomUUID());
     }
 
-    public static CustomerID from(final String id) {
-        return new CustomerID(id);
+    public static ProductID from(final String id) {
+        return new ProductID(id);
     }
 
-    public static CustomerID from(final UUID id) {
-        return new CustomerID(id.toString().toUpperCase());
+    public static ProductID from(final UUID id) {
+        return new ProductID(id.toString().toUpperCase());
     }
 
     @Override
@@ -34,7 +34,7 @@ public class CustomerID extends Identifier {
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final CustomerID that = (CustomerID) o;
+        final ProductID that = (ProductID) o;
         return Objects.equals(getValue(), that.getValue());
     }
 

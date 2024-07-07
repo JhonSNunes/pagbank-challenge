@@ -31,8 +31,8 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":application"))
 
+    implementation 'io.vavr:vavr:0.10.4'
     implementation 'com.mysql:mysql-connector-j'
-
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 
     implementation('org.springframework.boot:spring-boot-starter-web') {

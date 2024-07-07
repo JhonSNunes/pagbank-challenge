@@ -37,7 +37,6 @@ public class UpdateCustomerUseCaseTest {
         Mockito.reset(customerGateway);
     }
 
-    // 1. Teste do caminho feliz
     @Test
     public void givenAValidCommand_whenCallsUpdateCustomer_shouldReturnCustomerId() {
         final var expectedName = "José";
@@ -109,7 +108,6 @@ public class UpdateCustomerUseCaseTest {
         ));
     }
 
-    // 2. Teste passando uma propriedade inválida
     @Test
     public void givenAInvalidName_whenCallsUpdateCustomer_shouldThrowsError() {
         final String invalidName = null;
@@ -166,7 +164,6 @@ public class UpdateCustomerUseCaseTest {
         Mockito.verify(customerGateway, times(0)).update(any());
     }
 
-    // 4. Teste atualizar cliente com ID inválido
     @Test
     public void givenAInvalidID_whenCallsUpdateCustomer_shouldThrowsError() {
         final var invalidCustomerId = CustomerID.from("AN-INVALID-ID-123");

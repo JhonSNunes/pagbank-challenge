@@ -30,7 +30,6 @@ public class DeleteCustomerUseCaseTest {
         Mockito.reset(customerGateway);
     }
 
-    // 1. Teste do caminho feliz
     @Test
     public void givenAValidId_whenCallsDeleteCustomer_shouldBeOK() {
         final var expectedName = "José";
@@ -65,7 +64,6 @@ public class DeleteCustomerUseCaseTest {
         Mockito.verify(customerGateway, times(1)).deleteById(eq(expectedId));
     }
 
-    // 2. Teste atualizar cliente com ID inválido
     @Test
     public void givenAInvalidId_whenCallsDeleteCustomer_shouldBeOK() {
         final var invalidCustomerId = CustomerID.from("AN-INVALID-ID-123");

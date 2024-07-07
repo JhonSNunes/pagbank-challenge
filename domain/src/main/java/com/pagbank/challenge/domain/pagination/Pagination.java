@@ -5,13 +5,13 @@ import java.util.function.Function;
 
 public record Pagination<T>(
         int currentPage,
-        int itemsPerPage,
+        int perPage,
         long total,
         List<T> items
 ) {
     public <R> Pagination<R> map(final Function<T, R> mapper) {
         final List<R> list = this.items.stream().map(mapper).toList();
 
-        return new Pagination<>(currentPage(), itemsPerPage(), total(), list);
+        return new Pagination<>(currentPage(), perPage(), total(), list);
     }
 }

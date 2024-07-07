@@ -1,13 +1,9 @@
 package com.pagbank.challenge.application.customer.update;
 
-import com.pagbank.challenge.application.customer.create.CreateCustomerCommand;
-import com.pagbank.challenge.application.customer.create.CreateCustomerOutput;
-import com.pagbank.challenge.application.customer.create.CreateCustomerUseCase;
 import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerGateway;
 import com.pagbank.challenge.domain.customer.CustomerID;
-import com.pagbank.challenge.domain.exceptions.DomainException;
-import com.pagbank.challenge.domain.validation.Error;
+import com.pagbank.challenge.domain.exceptions.NotFoundException;
 import com.pagbank.challenge.domain.validation.handler.Notification;
 import io.vavr.control.Either;
 
@@ -50,10 +46,8 @@ public class DefaultUpdateCustomerUseCase extends UpdateCustomerUseCase {
         return notification.hasError() ? Left(notification) : update(customer);
     }
 
-    private Supplier<DomainException> notFound(CustomerID id) {
-        return () -> DomainException.with(
-                new Error("Customer with ID %s was not found".formatted(id.getValue()))
-        );
+    private Supplier<NotFoundException> notFound(CustomerID id) {
+        return () -> NotFoundException.with(Customer.class, id);
     }
 
     private Either<Notification, UpdateCustomerOutput> update(final Customer customer) {

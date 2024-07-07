@@ -4,6 +4,7 @@ import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerGateway;
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.exceptions.DomainException;
+import com.pagbank.challenge.domain.exceptions.NotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,6 @@ public class GetCustomerByIdUseCaseTest {
         Mockito.reset(customerGateway);
     }
 
-    // 1. Teste do caminho feliz
     @Test
     public void givenAValidId_whenCallsGetCustomer_shouldBeOK() {
         final var expectedName = "José";
@@ -85,7 +85,6 @@ public class GetCustomerByIdUseCaseTest {
         Assertions.assertEquals(persistedCustomer.getDeletedAt(), actualCustomer.deletedAt());
     }
 
-    // 2. Teste atualizar cliente com ID inválido
     @Test
     public void givenAInvalidId_whenCallsGetCustomer_shouldReturnNotFound() {
         final var invalidCustomerId = CustomerID.from("AN-INVALID-ID-123");
@@ -94,7 +93,7 @@ public class GetCustomerByIdUseCaseTest {
         when(customerGateway.findById(eq(invalidCustomerId))).thenReturn(Optional.empty());
 
         final var actualException = Assertions.assertThrows(
-            DomainException.class,
+            NotFoundException.class,
             () -> useCase.execute(invalidCustomerId.getValue())
         );
 

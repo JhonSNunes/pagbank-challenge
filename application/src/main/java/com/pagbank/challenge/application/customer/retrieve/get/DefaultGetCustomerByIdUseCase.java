@@ -6,6 +6,7 @@ import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerGateway;
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.exceptions.DomainException;
+import com.pagbank.challenge.domain.exceptions.NotFoundException;
 import com.pagbank.challenge.domain.validation.Error;
 import com.pagbank.challenge.domain.validation.handler.Notification;
 
@@ -29,9 +30,7 @@ public class DefaultGetCustomerByIdUseCase extends GetCustomerByIdUseCase {
                 .orElseThrow(notFound(customerId));
     }
 
-    private Supplier<DomainException> notFound(CustomerID id) {
-        return () -> DomainException.with(
-                new Error("Customer with ID %s was not found".formatted(id.getValue()))
-        );
+    private Supplier<NotFoundException> notFound(CustomerID id) {
+        return () -> NotFoundException.with(Customer.class, id);
     }
 }

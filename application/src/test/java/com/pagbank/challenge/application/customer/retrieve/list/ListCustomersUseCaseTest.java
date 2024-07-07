@@ -1,11 +1,8 @@
 package com.pagbank.challenge.application.customer.retrieve.list;
 
-import com.pagbank.challenge.application.customer.retrieve.get.DefaultGetCustomerByIdUseCase;
 import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerGateway;
-import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.customer.CustomerSearchQuery;
-import com.pagbank.challenge.domain.exceptions.DomainException;
 import com.pagbank.challenge.domain.pagination.Pagination;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +14,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
@@ -27,7 +23,7 @@ import static org.mockito.Mockito.when;
 public class ListCustomersUseCaseTest {
 
     @InjectMocks
-    private DefaultCustomerListUseCase useCase;
+    private DefaultListCustomerUseCase useCase;
 
     @Mock
     private CustomerGateway customerGateway;
@@ -78,7 +74,7 @@ public class ListCustomersUseCaseTest {
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, customers.size(), customers);
 
         final var expectedItemsCount = 2;
-        final var expectedResult = expectedPagination.map(CustomerListOutput::from);
+        final var expectedResult = expectedPagination.map(ListCustomerOutput::from);
 
         when(customerGateway.findAll(eq(query)))
                 .thenReturn(expectedPagination);
@@ -89,7 +85,7 @@ public class ListCustomersUseCaseTest {
         Assertions.assertEquals(expectedResult, actualResult);
         Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(customers.size(), actualResult.total());
     }
 
@@ -109,7 +105,7 @@ public class ListCustomersUseCaseTest {
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, customers.size(), customers);
 
         final var expectedItemsCount = 0;
-        final var expectedResult = expectedPagination.map(CustomerListOutput::from);
+        final var expectedResult = expectedPagination.map(ListCustomerOutput::from);
 
         when(customerGateway.findAll(eq(query)))
                 .thenReturn(expectedPagination);
@@ -120,7 +116,7 @@ public class ListCustomersUseCaseTest {
         Assertions.assertEquals(expectedResult, actualResult);
         Assertions.assertEquals(expectedItemsCount, actualResult.items().size());
         Assertions.assertEquals(expectedPage, actualResult.currentPage());
-        Assertions.assertEquals(expectedPerPage, actualResult.itemsPerPage());
+        Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(customers.size(), actualResult.total());
     }
 }
