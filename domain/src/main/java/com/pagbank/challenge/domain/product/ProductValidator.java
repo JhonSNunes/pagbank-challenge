@@ -26,7 +26,7 @@ public class ProductValidator extends Validator {
         }
 
         if (this.product.getRate().signum() < 0) {
-            this.validationHandler().append(new Error("'rate' must be greather than zero!"));
+            this.validationHandler().append(new Error("'rate' must be greather or equal than zero!"));
             return;
         }
     }
