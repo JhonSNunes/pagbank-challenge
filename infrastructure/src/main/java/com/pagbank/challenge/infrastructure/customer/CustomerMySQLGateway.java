@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-import static com.pagbank.challenge.infrastructure.utils.SpecificationUtils.like;
-
 @Service
 public class CustomerMySQLGateway implements CustomerGateway {
     private final CustomerRepository repository;
@@ -51,14 +49,12 @@ public class CustomerMySQLGateway implements CustomerGateway {
 
     @Override
     public Pagination<Customer> findAll(CustomerSearchQuery query) {
-        // Paginação
         final var page = PageRequest.of(
                 query.page(),
                 query.perPage(),
                 Sort.by(Sort.Direction.fromString(query.direction()), query.sort())
         );
 
-        // Busca dinamica pelo criterio terms (name ou description)
         final var specifications = Optional.ofNullable(query.terms())
                 .filter(str -> !str.isBlank())
                 .map(str -> SpecificationUtils.<CustomerJpaEntity>like("name", str))

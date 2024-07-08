@@ -1,5 +1,8 @@
 package com.pagbank.challenge;
 
+import com.pagbank.challenge.infrastructure.customer.persistence.CustomerRepository;
+import com.pagbank.challenge.infrastructure.product.persistence.ProductRepository;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.BeforeEachCallback;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.ExtensionContext;
@@ -12,27 +15,34 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.lang.annotation.*;
 import java.util.Collection;
+import java.util.List;
 
+@Tag("integrationTest")
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 @ActiveProfiles("test")
 @DataJpaTest
-@ComponentScan(includeFilters = {
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".[MySQLGateway]")
-})
+@ComponentScan(
+        basePackages = "com.pagbank.challenge",
+        useDefaultFilters = false,
+        includeFilters = {
+                @ComponentScan.Filter(type = FilterType.REGEX, pattern = ".*MySQLGateway")
+        }
+)
 @ExtendWith(MySQLGatewayTest.CleanUpExtensions.class)
 public @interface MySQLGatewayTest {
     class CleanUpExtensions implements BeforeEachCallback {
 
         @Override
         public void beforeEach(ExtensionContext extensionContext) throws Exception {
-            final var repositories = SpringExtension
-                    .getApplicationContext(extensionContext)
-                    .getBeansOfType(CrudRepository.class)
-                    .values();
+            final var appContext = SpringExtension
+                    .getApplicationContext(extensionContext);
 
-            cleanUp(repositories);
+            cleanUp(List.of(
+                    appContext.getBean(ProductRepository.class),
+                    appContext.getBean(CustomerRepository.class)
+            ));
         }
 
         private void cleanUp(final Collection<CrudRepository> repositories) {
