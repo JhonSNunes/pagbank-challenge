@@ -16,7 +16,7 @@ public class OrderTest {
         final var expectedCustomer = CustomerID.unique();
         final var expectedProduct = ProductID.unique();
         final var expectedAmount = new BigDecimal("1045.35");
-        final var expectedTransactionType = OrderTransactionType.BUY;
+        final var expectedTransactionType = OrderTransactionType.PURCHASE;
 
         final var order = Order.createOrder(
                 expectedCustomer,
@@ -64,7 +64,7 @@ public class OrderTest {
         final var expectedCustomer = CustomerID.unique();
         final ProductID expectedProduct = null;
         final var expectedAmount = new BigDecimal("1045.35");
-        final var expectedTransactionType = OrderTransactionType.BUY;
+        final var expectedTransactionType = OrderTransactionType.PURCHASE;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'productId' should not be null";
 
@@ -90,7 +90,7 @@ public class OrderTest {
         final var expectedCustomer = CustomerID.unique();
         final var expectedProduct = ProductID.unique();
         final var expectedAmount = new BigDecimal("-1");
-        final var expectedTransactionType = OrderTransactionType.BUY;
+        final var expectedTransactionType = OrderTransactionType.PURCHASE;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'amount' must be greather or equal than zero!";
 

@@ -26,6 +26,11 @@ public class OrderValidator extends Validator {
             return;
         }
 
+        if (this.order.getAmount() == null) {
+            this.validationHandler().append(new Error("'amount' should not be null"));
+            return;
+        }
+
         if (this.order.getAmount().signum() < 0) {
             this.validationHandler().append(new Error("'amount' must be greather or equal than zero!"));
             return;

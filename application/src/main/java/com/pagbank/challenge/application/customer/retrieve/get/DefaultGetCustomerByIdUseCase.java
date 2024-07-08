@@ -5,10 +5,7 @@ import com.pagbank.challenge.application.customer.create.GetCustomerByIdOutput;
 import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerGateway;
 import com.pagbank.challenge.domain.customer.CustomerID;
-import com.pagbank.challenge.domain.exceptions.DomainException;
 import com.pagbank.challenge.domain.exceptions.NotFoundException;
-import com.pagbank.challenge.domain.validation.Error;
-import com.pagbank.challenge.domain.validation.handler.Notification;
 
 import java.util.Objects;
 import java.util.function.Supplier;
