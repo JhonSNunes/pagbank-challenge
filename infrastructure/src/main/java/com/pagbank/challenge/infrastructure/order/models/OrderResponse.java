@@ -1,7 +1,7 @@
 package com.pagbank.challenge.infrastructure.order.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.pagbank.challenge.domain.order.OrderTransactionType;
+import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -12,6 +12,6 @@ public record OrderResponse(
         @JsonProperty("product_id") String productId,
         @JsonProperty("amount") BigDecimal amount,
         @JsonProperty("transaction_date") Instant transactionDate,
-        @JsonProperty("transaction_type") OrderTransactionType transactionType
+        @JsonProperty("transaction_type") CdbOrderTransactionType transactionType
 ) {
 }

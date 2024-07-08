@@ -1,9 +1,9 @@
 package com.pagbank.challenge.infrastructure.order.persistence;
 
 import com.pagbank.challenge.domain.customer.CustomerID;
-import com.pagbank.challenge.domain.order.Order;
-import com.pagbank.challenge.domain.order.OrderID;
-import com.pagbank.challenge.domain.order.OrderTransactionType;
+import com.pagbank.challenge.domain.cdborder.CdbOrder;
+import com.pagbank.challenge.domain.cdborder.CdbOrderID;
+import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
 import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.infrastructure.customer.persistence.CustomerJpaEntity;
 import com.pagbank.challenge.infrastructure.product.persistence.ProductJpaEntity;
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
-@Table(name = "order")
+@Table(name = "cdb_order")
 public class OrderJpaEntity {
 
     @Id
@@ -33,9 +33,9 @@ public class OrderJpaEntity {
     @Column(name = "transaction_date", columnDefinition = "DATETIME(6)")
     private Instant transactionDate;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(name = "transaction_type", nullable = false)
-    private OrderTransactionType transactionType;
+    private CdbOrderTransactionType transactionType;
 
     public OrderJpaEntity() {
     }
@@ -46,7 +46,7 @@ public class OrderJpaEntity {
             final ProductJpaEntity product,
             final BigDecimal amount,
             final Instant transactionDate,
-            final OrderTransactionType transactionType
+            final CdbOrderTransactionType transactionType
     ) {
         this.id = id;
         this.customer = customer;
@@ -57,7 +57,7 @@ public class OrderJpaEntity {
     }
 
     public static OrderJpaEntity from(
-            final Order order,
+            final CdbOrder order,
             final CustomerJpaEntity customer,
             final ProductJpaEntity product
     ) {
@@ -71,9 +71,9 @@ public class OrderJpaEntity {
         );
     }
 
-    public Order toAggregate() {
-        return Order.with(
-                OrderID.from(getId()),
+    public CdbOrder toAggregate() {
+        return CdbOrder.with(
+                CdbOrderID.from(getId()),
                 CustomerID.from(getCustomer().getId()),
                 ProductID.from(getProduct().getId()),
                 getAmount(),
@@ -122,11 +122,11 @@ public class OrderJpaEntity {
         this.transactionDate = transactionDate;
     }
 
-    public OrderTransactionType getTransactionType() {
+    public CdbOrderTransactionType getTransactionType() {
         return transactionType;
     }
 
-    public void setTransactionType(OrderTransactionType transactionType) {
+    public void setTransactionType(CdbOrderTransactionType transactionType) {
         this.transactionType = transactionType;
     }
 }

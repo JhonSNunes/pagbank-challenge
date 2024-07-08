@@ -1,49 +1,42 @@
 package com.pagbank.challenge.infrastructure.configuration.usecases;
 
-import com.pagbank.challenge.application.order.delete.DefaultDeleteOrderUseCase;
-import com.pagbank.challenge.application.order.delete.DeleteOrderUseCase;
-import com.pagbank.challenge.application.order.purchase.DefaultPurchaseOrderUseCase;
-import com.pagbank.challenge.application.order.purchase.PurchaseOrderUseCase;
-import com.pagbank.challenge.application.order.retrieve.get.DefaultGetOrderByIdUseCase;
-import com.pagbank.challenge.application.order.retrieve.get.GetOrderByIdUseCase;
-import com.pagbank.challenge.application.order.retrieve.list.DefaultListOrderUseCase;
-import com.pagbank.challenge.application.order.retrieve.list.ListOrderUseCase;
-import com.pagbank.challenge.application.order.sell.DefaultSellOrderUseCase;
-import com.pagbank.challenge.application.order.sell.SellOrderUseCase;
-import com.pagbank.challenge.domain.order.OrderGateway;
+import com.pagbank.challenge.application.cdborder.create.CreateCdbOrderUseCase;
+import com.pagbank.challenge.application.cdborder.create.DefaultCreateCdbOrderUseCase;
+import com.pagbank.challenge.application.cdborder.delete.DefaultDeleteOrderUseCase;
+import com.pagbank.challenge.application.cdborder.delete.DeleteOrderUseCase;
+import com.pagbank.challenge.application.cdborder.retrieve.get.DefaultGetOrderByIdUseCase;
+import com.pagbank.challenge.application.cdborder.retrieve.get.GetOrderByIdUseCase;
+import com.pagbank.challenge.application.cdborder.retrieve.list.DefaultListOrderUseCase;
+import com.pagbank.challenge.application.cdborder.retrieve.list.ListOrderUseCase;
+import com.pagbank.challenge.domain.cdborder.CdbOrderGateway;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OrderUseCaseConfig {
-    private final OrderGateway orderGateway;
+    private final CdbOrderGateway cdbOrderGateway;
 
-    public OrderUseCaseConfig(OrderGateway orderGateway) {
-        this.orderGateway = orderGateway;
+    public OrderUseCaseConfig(final CdbOrderGateway cdbOrderGateway) {
+        this.cdbOrderGateway = cdbOrderGateway;
     }
 
     @Bean
-    public PurchaseOrderUseCase purchaseOrderUseCase() {
-        return new DefaultPurchaseOrderUseCase(this.orderGateway);
-    }
-
-    @Bean
-    public SellOrderUseCase sellOrderUseCase() {
-        return new DefaultSellOrderUseCase(this.orderGateway);
+    public CreateCdbOrderUseCase purchaseOrderUseCase() {
+        return new DefaultCreateCdbOrderUseCase(this.cdbOrderGateway);
     }
 
     @Bean
     public DeleteOrderUseCase deleteOrderUseCase() {
-        return new DefaultDeleteOrderUseCase(this.orderGateway);
+        return new DefaultDeleteOrderUseCase(this.cdbOrderGateway);
     }
 
     @Bean
     public GetOrderByIdUseCase getOrderByIdUseCase() {
-        return new DefaultGetOrderByIdUseCase(this.orderGateway);
+        return new DefaultGetOrderByIdUseCase(this.cdbOrderGateway);
     }
 
     @Bean
     public ListOrderUseCase listOrderUseCase() {
-        return new DefaultListOrderUseCase(this.orderGateway);
+        return new DefaultListOrderUseCase(this.cdbOrderGateway);
     }
 }

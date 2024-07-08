@@ -48,6 +48,7 @@ dependencies {
 }
 
 flyway {
+    cleanDisabled = false
     url = System.getenv('FLYWAY_DB') ?: 'jdbc:mysql://localhost:3312/pagbank_challenge';
     user = System.getenv('FLYWAY_DB') ?: 'root';
     password = System.getenv('FLYWAY_DB') ?: 'root'

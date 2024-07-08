@@ -1,7 +1,7 @@
 package com.pagbank.challenge.domain;
 
-import com.pagbank.challenge.domain.order.Order;
-import com.pagbank.challenge.domain.order.OrderTransactionType;
+import com.pagbank.challenge.domain.cdborder.CdbOrder;
+import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.domain.validation.handler.Notification;
@@ -16,9 +16,9 @@ public class OrderTest {
         final var expectedCustomer = CustomerID.unique();
         final var expectedProduct = ProductID.unique();
         final var expectedAmount = new BigDecimal("1045.35");
-        final var expectedTransactionType = OrderTransactionType.PURCHASE;
+        final var expectedTransactionType = CdbOrderTransactionType.PURCHASE;
 
-        final var order = Order.createOrder(
+        final var order = CdbOrder.createOrder(
                 expectedCustomer,
                 expectedProduct,
                 expectedAmount,
@@ -38,11 +38,11 @@ public class OrderTest {
         final CustomerID expectedCustomer = null;
         final var expectedProduct = ProductID.unique();
         final var expectedAmount = new BigDecimal("1045.35");
-        final var expectedTransactionType = OrderTransactionType.SELL;
+        final var expectedTransactionType = CdbOrderTransactionType.SELL;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'customerId' should not be null";
 
-        final var order = Order.createOrder(
+        final var order = CdbOrder.createOrder(
                 expectedCustomer,
                 expectedProduct,
                 expectedAmount,
@@ -64,11 +64,11 @@ public class OrderTest {
         final var expectedCustomer = CustomerID.unique();
         final ProductID expectedProduct = null;
         final var expectedAmount = new BigDecimal("1045.35");
-        final var expectedTransactionType = OrderTransactionType.PURCHASE;
+        final var expectedTransactionType = CdbOrderTransactionType.PURCHASE;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'productId' should not be null";
 
-        final var order = Order.createOrder(
+        final var order = CdbOrder.createOrder(
                 expectedCustomer,
                 expectedProduct,
                 expectedAmount,
@@ -90,11 +90,11 @@ public class OrderTest {
         final var expectedCustomer = CustomerID.unique();
         final var expectedProduct = ProductID.unique();
         final var expectedAmount = new BigDecimal("-1");
-        final var expectedTransactionType = OrderTransactionType.PURCHASE;
+        final var expectedTransactionType = CdbOrderTransactionType.PURCHASE;
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'amount' must be greather or equal than zero!";
 
-        final var order = Order.createOrder(
+        final var order = CdbOrder.createOrder(
                 expectedCustomer,
                 expectedProduct,
                 expectedAmount,
