@@ -11,11 +11,12 @@ import com.pagbank.challenge.infrastructure.utils.SpecificationUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+@Component
 public class ProductMySQLGateway implements ProductGateway {
     private final ProductRepository repository;
 

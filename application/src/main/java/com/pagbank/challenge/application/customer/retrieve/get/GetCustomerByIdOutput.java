@@ -1,4 +1,4 @@
-package com.pagbank.challenge.application.customer.create;
+package com.pagbank.challenge.application.customer.retrieve.get;
 
 import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerID;

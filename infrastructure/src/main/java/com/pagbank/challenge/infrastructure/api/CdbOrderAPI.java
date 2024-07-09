@@ -1,8 +1,8 @@
 package com.pagbank.challenge.infrastructure.api;
 
 import com.pagbank.challenge.domain.pagination.Pagination;
-import com.pagbank.challenge.infrastructure.order.models.OrderRequest;
-import com.pagbank.challenge.infrastructure.order.models.OrderResponse;
+import com.pagbank.challenge.infrastructure.cdborder.models.CdbOrderRequest;
+import com.pagbank.challenge.infrastructure.cdborder.models.CdbOrderResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -25,7 +25,7 @@ public interface CdbOrderAPI {
             @ApiResponse(responseCode = "422", description = "A validation error was thrown"),
             @ApiResponse(responseCode = "500", description = "An internal server error was throw")
     })
-    ResponseEntity<?> createOrder(@RequestBody OrderRequest input);
+    ResponseEntity<?> createOrder(@RequestBody CdbOrderRequest input);
 
     @GetMapping
     @Operation(summary = "List all orders paginated")
@@ -54,7 +54,7 @@ public interface CdbOrderAPI {
             @ApiResponse(responseCode = "404", description = "Product was not found"),
             @ApiResponse(responseCode = "500", description = "An internal server error was throw")
     })
-    OrderResponse getById(@PathVariable(name = "id") String id);
+    CdbOrderResponse getById(@PathVariable(name = "id") String id);
 
     @DeleteMapping(
             value = "{id}",

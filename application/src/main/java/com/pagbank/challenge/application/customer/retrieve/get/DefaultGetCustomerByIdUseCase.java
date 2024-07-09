@@ -1,7 +1,5 @@
 package com.pagbank.challenge.application.customer.retrieve.get;
 
-
-import com.pagbank.challenge.application.customer.create.GetCustomerByIdOutput;
 import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerGateway;
 import com.pagbank.challenge.domain.customer.CustomerID;
@@ -9,6 +7,7 @@ import com.pagbank.challenge.domain.exceptions.NotFoundException;
 
 import java.util.Objects;
 import java.util.function.Supplier;
+
 
 public class DefaultGetCustomerByIdUseCase extends GetCustomerByIdUseCase {
 

@@ -1,6 +1,6 @@
 package com.pagbank.challenge.infrastructure.customer.presenters;
 
-import com.pagbank.challenge.application.customer.create.GetCustomerByIdOutput;
+import com.pagbank.challenge.application.customer.retrieve.get.GetCustomerByIdOutput;
 import com.pagbank.challenge.infrastructure.customer.models.CustomerResponse;
 
 public interface CustomerApiPresenter {

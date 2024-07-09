@@ -1,4 +1,4 @@
-package com.pagbank.challenge.infrastructure.order.models;
+package com.pagbank.challenge.infrastructure.cdborder.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
@@ -6,7 +6,7 @@ import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-public record OrderResponse(
+public record CdbOrderResponse(
         @JsonProperty("order_id") String id,
         @JsonProperty("customer_id") String customerId,
         @JsonProperty("product_id") String productId,

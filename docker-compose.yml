@@ -1,13 +1,7 @@
 services:
-    mysql:
+    pagbank_challenge_mysql:
         image: mysql:latest
         container_name: pagbank_challenge_mysql
-#        command: --innodb-use-native-aio=0
-#        restart: always
-#        tty: true
-#        volumes:
-#            - ./mysql:/var/lib/mysql
-#            - ./mysqlBackup/backup.sql:/docker-entrypoint-initdb.d/backup.sql
         environment:
             - MYSQL_DATABASE=pagbank_challenge
             - MYSQL_ROOT_PASSWORD=root
@@ -15,6 +9,19 @@ services:
         ports:
             - 3312:3306
         networks:
-            - pagbankn_network
+            - pagbank-network
+    spring:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: spring
+        environment:
+            DATABASE_MYSQL_URL: jdbc:mysql://pagbank_challenge_mysql:3312/pagbank_challenge?allowPublicKeyRetrieval=true&useSSL=false
+            DATABASE_MYSQL_USERNAME: root
+            DATABASE_MYSQL_PASSWORD: root
+        ports:
+            - 8080:8080
+        networks:
+            - pagbank-network
 networks:
-    pagbankn_network:
+    pagbank-network:

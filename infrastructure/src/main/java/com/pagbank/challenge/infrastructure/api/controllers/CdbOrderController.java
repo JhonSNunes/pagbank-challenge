@@ -12,9 +12,9 @@ import com.pagbank.challenge.domain.pagination.Pagination;
 import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.domain.validation.handler.Notification;
 import com.pagbank.challenge.infrastructure.api.CdbOrderAPI;
-import com.pagbank.challenge.infrastructure.order.models.OrderRequest;
-import com.pagbank.challenge.infrastructure.order.models.OrderResponse;
-import com.pagbank.challenge.infrastructure.order.presenters.OrderApiPresenter;
+import com.pagbank.challenge.infrastructure.cdborder.models.CdbOrderRequest;
+import com.pagbank.challenge.infrastructure.cdborder.models.CdbOrderResponse;
+import com.pagbank.challenge.infrastructure.cdborder.presenters.OrderApiPresenter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,7 +43,7 @@ public class CdbOrderController implements CdbOrderAPI {
     }
 
     @Override
-    public ResponseEntity<?> createOrder(final OrderRequest input) {
+    public ResponseEntity<?> createOrder(final CdbOrderRequest input) {
         final var command = CreateCdbOrderCommand.with(
             CustomerID.from(input.customerId()),
             ProductID.from(input.productId()),
@@ -93,7 +93,7 @@ public class CdbOrderController implements CdbOrderAPI {
     }
 
     @Override
-    public OrderResponse getById(final String id) {
+    public CdbOrderResponse getById(final String id) {
         return OrderApiPresenter.present(this.getOrderByIdUseCase.execute(id));
     }
 

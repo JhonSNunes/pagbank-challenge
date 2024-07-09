@@ -1,4 +1,4 @@
-package com.pagbank.challenge.infrastructure.order.persistence;
+package com.pagbank.challenge.infrastructure.cdborder.persistence;
 
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.cdborder.CdbOrder;
@@ -9,12 +9,13 @@ import com.pagbank.challenge.infrastructure.customer.persistence.CustomerJpaEnti
 import com.pagbank.challenge.infrastructure.product.persistence.ProductJpaEntity;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Entity
 @Table(name = "cdb_order")
-public class OrderJpaEntity {
+public class CdbOrderJpaEntity implements Serializable {
 
     @Id
     private String id;
@@ -37,10 +38,10 @@ public class OrderJpaEntity {
     @Column(name = "transaction_type", nullable = false)
     private CdbOrderTransactionType transactionType;
 
-    public OrderJpaEntity() {
+    public CdbOrderJpaEntity() {
     }
 
-    private OrderJpaEntity(
+    private CdbOrderJpaEntity(
             final String id,
             final CustomerJpaEntity customer,
             final ProductJpaEntity product,
@@ -56,12 +57,12 @@ public class OrderJpaEntity {
         this.transactionType = transactionType;
     }
 
-    public static OrderJpaEntity from(
+    public static CdbOrderJpaEntity from(
             final CdbOrder order,
             final CustomerJpaEntity customer,
             final ProductJpaEntity product
     ) {
-        return new OrderJpaEntity(
+        return new CdbOrderJpaEntity(
                 order.getId().getValue(),
                 customer,
                 product,

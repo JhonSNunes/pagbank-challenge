@@ -13,15 +13,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class OrderUseCaseConfig {
+public class CdbOrderUseCaseConfig {
     private final CdbOrderGateway cdbOrderGateway;
 
-    public OrderUseCaseConfig(final CdbOrderGateway cdbOrderGateway) {
+    public CdbOrderUseCaseConfig(final CdbOrderGateway cdbOrderGateway) {
         this.cdbOrderGateway = cdbOrderGateway;
     }
 
     @Bean
-    public CreateCdbOrderUseCase purchaseOrderUseCase() {
+    public CreateCdbOrderUseCase createCdbOrderUseCase() {
         return new DefaultCreateCdbOrderUseCase(this.cdbOrderGateway);
     }
 

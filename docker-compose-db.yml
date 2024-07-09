@@ -1,0 +1,16 @@
+services:
+    pagbank_challenge_mysql:
+        image: mysql:latest
+        container_name: pagbank_challenge_mysql
+        environment:
+            - MYSQL_DATABASE=pagbank_challenge
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL-USER=root
+        ports:
+            - 3312:3306
+        networks:
+            - network
+networks:
+    network:
+        driver: bridge
+        name: pagbank-network
