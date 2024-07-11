@@ -3,14 +3,15 @@ services:
         image: mysql:latest
         container_name: pagbank_challenge_mysql
         environment:
-            - MYSQL_DATABASE=pagbank_challenge
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL-USER=root
+            MYSQL_DATABASE: pagbank_challenge
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_ROOT_HOST: '%'
         ports:
-            - 3312:3306
+            - 3306:3306
+        volumes:
+            - ../.docker/mysql:/var/lib/mysql:rw
         networks:
-            - network
+            - pagbank-services
 networks:
-    network:
-        driver: bridge
-        name: pagbank-network
+    pagbank-services:
+        external: true

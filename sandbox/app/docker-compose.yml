@@ -1,27 +1,17 @@
 services:
-    pagbank_challenge_mysql:
-        image: mysql:latest
-        container_name: pagbank_challenge_mysql
-        environment:
-            - MYSQL_DATABASE=pagbank_challenge
-            - MYSQL_ROOT_PASSWORD=root
-            - MYSQL-USER=root
-        ports:
-            - 3312:3306
-        networks:
-            - pagbank-network
-    spring:
+    pagbank-app:
+        container_name: pagbank-app
         build:
-            context: .
+            context: ../../
             dockerfile: Dockerfile
-        container_name: spring
-        environment:
-            DATABASE_MYSQL_URL: jdbc:mysql://pagbank_challenge_mysql:3312/pagbank_challenge?allowPublicKeyRetrieval=true&useSSL=false
-            DATABASE_MYSQL_USERNAME: root
-            DATABASE_MYSQL_PASSWORD: root
+        env_file:
+            - ../../.env.example #Em um ambiente real aqui seria um env.local sem ser commitado
         ports:
             - 8080:8080
         networks:
             - pagbank-network
+            - pagbank-services
 networks:
     pagbank-network:
+    pagbank-services:
+        external: true
