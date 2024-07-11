@@ -11,7 +11,7 @@ public final class SqlUtils {
     }
 
     public static String like(final String term) {
-        if (term == null) return null;
+        if (term == null || term.isEmpty()) return null;
         return "%" + term + "%";
     }
 }

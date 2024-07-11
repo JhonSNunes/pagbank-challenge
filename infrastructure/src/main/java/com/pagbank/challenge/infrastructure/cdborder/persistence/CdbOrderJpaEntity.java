@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-@Entity
+@Entity(name = "CDBOrder")
 @Table(name = "cdb_order")
 public class CdbOrderJpaEntity implements Serializable {
 

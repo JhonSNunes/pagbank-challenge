@@ -67,7 +67,6 @@ public class CdbOrderController implements CdbOrderAPI {
             String search,
             int page,
             int perPage,
-            String sort,
             String direction
     ) {
         CustomerID actualCustomerId = null;
@@ -85,7 +84,6 @@ public class CdbOrderController implements CdbOrderAPI {
                 page,
                 perPage,
                 search,
-                sort,
                 direction,
                 actualCustomerId,
                 actualProductId

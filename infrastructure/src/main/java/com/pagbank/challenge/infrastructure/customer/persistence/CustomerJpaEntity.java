@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 import java.time.Instant;
 
-@Entity
+@Entity(name = "Customer")
 @Table(name = "customer")
 public class CustomerJpaEntity {
 

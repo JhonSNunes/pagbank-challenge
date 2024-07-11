@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.Instant;
 
-@Entity
+@Entity(name = "Product")
 @Table(name = "product")
 public class ProductJpaEntity {
 

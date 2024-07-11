@@ -7,7 +7,6 @@ public record CdbOrderSearchQuery(
         Integer page,
         Integer perPage,
         String terms,
-        String sort,
         String direction,
         CustomerID customerId,
         ProductID productId
