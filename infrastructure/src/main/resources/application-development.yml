@@ -1,8 +1,8 @@
 mysql:
-    username: root
-    password: root
+    username: ${DATABASE_MYSQL_USERNAME:root}
+    password: ${DATABASE_MYSQL_PASSWORD:root}
     schema: pagbank_challenge
-    url: localhost:3312
+    url: ${DATABASE_MYSQL_URL:localhost:3306}
 
 server:
     port: 8080
