@@ -1,25 +1,16 @@
 package com.pagbank.challenge.infrastructure.customer.persistence;
 
-import com.pagbank.challenge.application.customer.retrieve.get.GetCustomerByIdUseCase;
-import com.pagbank.challenge.application.product.retrieve.get.GetProductByIdUseCase;
-import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.MySQLGatewayTest;
-import com.pagbank.challenge.infrastructure.cdborder.CdbOrderMySQLGateway;
+import com.pagbank.challenge.domain.customer.Customer;
 import org.hibernate.PropertyValueException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 
 @MySQLGatewayTest
 public class CustomerRepositoryTest {
-//    @Mock
-    private GetCustomerByIdUseCase getCustomerByIdUseCase;
-//
-//    @Mock
-//    private GetProductByIdUseCase getProductByIdUseCase;
 
     @Autowired
     private CustomerRepository customerRepository;

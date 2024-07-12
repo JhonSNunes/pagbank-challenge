@@ -7,14 +7,14 @@ import com.pagbank.challenge.domain.product.ProductID;
 import java.math.BigDecimal;
 
 public record CreateCdbOrderCommand(
-        CustomerID customerId,
-        ProductID productId,
+        String customerId,
+        String productId,
         BigDecimal amount,
         CdbOrderTransactionType transactionType
 ) {
     public static CreateCdbOrderCommand with(
-            final CustomerID customerId,
-            final ProductID productId,
+            final String customerId,
+            final String productId,
             final BigDecimal amount,
             final CdbOrderTransactionType transactionType
     ) {

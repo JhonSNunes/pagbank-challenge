@@ -9,7 +9,6 @@ public class ProductID extends Identifier {
     private final String value;
 
     private ProductID(final String value) {
-        Objects.requireNonNull(value);
         this.value = value;
     }
 

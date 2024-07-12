@@ -14,4 +14,9 @@ public final class SqlUtils {
         if (term == null || term.isEmpty()) return null;
         return "%" + term + "%";
     }
+
+    public static String nullIfEmpty(final String term) {
+        if (term.isEmpty() || term.isBlank() || term == null) return null;
+        return term;
+    }
 }

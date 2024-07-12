@@ -7,9 +7,7 @@ import com.pagbank.challenge.application.cdborder.delete.DeleteOrderUseCase;
 import com.pagbank.challenge.application.cdborder.retrieve.get.GetOrderByIdUseCase;
 import com.pagbank.challenge.application.cdborder.retrieve.list.ListOrderUseCase;
 import com.pagbank.challenge.domain.cdborder.CdbOrderSearchQuery;
-import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.pagination.Pagination;
-import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.domain.validation.handler.Notification;
 import com.pagbank.challenge.infrastructure.api.CdbOrderAPI;
 import com.pagbank.challenge.infrastructure.cdborder.models.CdbOrderRequest;
@@ -45,8 +43,8 @@ public class CdbOrderController implements CdbOrderAPI {
     @Override
     public ResponseEntity<?> createOrder(final CdbOrderRequest input) {
         final var command = CreateCdbOrderCommand.with(
-            CustomerID.from(input.customerId()),
-            ProductID.from(input.productId()),
+            input.customerId(),
+            input.productId(),
             input.amount(),
             input.transactionType()
         );
@@ -55,7 +53,7 @@ public class CdbOrderController implements CdbOrderAPI {
                 ResponseEntity.unprocessableEntity().body(notification);
 
         final Function<CdbOrderOutput, ResponseEntity<?>> onSuccess = output ->
-                ResponseEntity.created(URI.create("/orders/" + output.id())).body(output);
+                ResponseEntity.created(URI.create("/cdborders/" + output.id())).body(output);
 
         return createCdbOrderUseCase.execute(command).fold(onError, onSuccess);
     }
@@ -69,24 +67,12 @@ public class CdbOrderController implements CdbOrderAPI {
             int perPage,
             String direction
     ) {
-        CustomerID actualCustomerId = null;
-        ProductID actualProductId = null;
-
-        if (customerId != null) {
-            actualCustomerId = CustomerID.from(customerId);
-        }
-
-        if (productId != null) {
-            actualProductId = ProductID.from(productId);
-        }
-
         return this.listOrderUseCase.execute(new CdbOrderSearchQuery(
                 page,
                 perPage,
                 search,
-                direction,
-                actualCustomerId,
-                actualProductId
+                customerId,
+                productId
         ));
     }
 

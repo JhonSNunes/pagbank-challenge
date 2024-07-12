@@ -3,6 +3,10 @@ package com.pagbank.challenge.application.cdborder.create;
 import com.pagbank.challenge.application.cdborder.CdbOrderOutput;
 import com.pagbank.challenge.domain.cdborder.CdbOrder;
 import com.pagbank.challenge.domain.cdborder.CdbOrderGateway;
+import com.pagbank.challenge.domain.customer.CustomerID;
+import com.pagbank.challenge.domain.exceptions.DomainException;
+import com.pagbank.challenge.domain.product.ProductID;
+import com.pagbank.challenge.domain.validation.Error;
 import com.pagbank.challenge.domain.validation.handler.Notification;
 import io.vavr.control.Either;
 
@@ -21,14 +25,25 @@ public class DefaultCreateCdbOrderUseCase extends CreateCdbOrderUseCase {
 
     @Override
     public Either<Notification, CdbOrderOutput> execute(final CreateCdbOrderCommand command) {
+        Notification notification = Notification.create();
+
+        final var customerId = CustomerID.from(command.customerId());
+        final var productId = ProductID.from(command.productId());
+
+        if (command.transactionType().isSell()) {
+            final var amountOfProduct = cdbOrderGateway.findBalanceByCustomerAndProduct(customerId, productId);
+
+            if (amountOfProduct != null && amountOfProduct.compareTo(command.amount()) < 0 ) {
+                throw DomainException.with(new Error("You don't have balance with this product to sell this amount value"));
+            }
+        }
+
         final var order = CdbOrder.createOrder(
-                command.customerId(),
-                command.productId(),
+                customerId,
+                productId,
                 command.amount(),
                 command.transactionType()
         );
-
-        Notification notification = Notification.create();
 
         order.validate(notification);
 

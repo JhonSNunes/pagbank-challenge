@@ -9,7 +9,6 @@ public class CustomerID extends Identifier {
     private final String value;
 
     private CustomerID(final String value) {
-        Objects.requireNonNull(value);
         this.value = value;
     }
 

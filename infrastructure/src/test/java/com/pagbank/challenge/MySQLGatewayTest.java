@@ -1,5 +1,6 @@
 package com.pagbank.challenge;
 
+import com.pagbank.challenge.infrastructure.cdborder.persistence.CdbOrderRepository;
 import com.pagbank.challenge.infrastructure.customer.persistence.CustomerRepository;
 import com.pagbank.challenge.infrastructure.product.persistence.ProductRepository;
 import org.junit.jupiter.api.Tag;
@@ -41,7 +42,9 @@ public @interface MySQLGatewayTest {
 
             cleanUp(List.of(
                     appContext.getBean(ProductRepository.class),
-                    appContext.getBean(CustomerRepository.class)
+                    appContext.getBean(CustomerRepository.class),
+                    appContext.getBean(CdbOrderRepository.class)
+
             ));
         }
 

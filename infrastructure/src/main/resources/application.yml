@@ -20,10 +20,6 @@ spring:
             maximum-pool-size: 20 # Máximo de conexções
             minimum-idle: 10 # Mínimo de conexões
             pool-name: master
-    flyway:
-        url: jdbc:mysql://${mysql.url}/${mysql.schema}
-        user: ${mysql.username}
-        password: ${mysql.password}
     jpa:
         open-in-view: false
         show-sql: true

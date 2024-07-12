@@ -1,12 +1,11 @@
 package com.pagbank.challenge.infrastructure.cdborder;
 
-import com.pagbank.challenge.domain.cdborder.CdbOrder;
-import com.pagbank.challenge.domain.cdborder.CdbOrderGateway;
-import com.pagbank.challenge.domain.cdborder.CdbOrderID;
-import com.pagbank.challenge.domain.cdborder.CdbOrderSearchQuery;
+import com.pagbank.challenge.domain.cdborder.*;
 import com.pagbank.challenge.domain.customer.Customer;
+import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.exceptions.NotFoundException;
 import com.pagbank.challenge.domain.pagination.Pagination;
+import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.infrastructure.cdborder.persistence.CdbOrderJpaEntity;
 import com.pagbank.challenge.infrastructure.cdborder.persistence.CdbOrderRepository;
 import com.pagbank.challenge.infrastructure.customer.CustomerMySQLGateway;
@@ -17,10 +16,10 @@ import com.pagbank.challenge.infrastructure.utils.SqlUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -62,17 +61,13 @@ public class CdbOrderMySQLGateway implements CdbOrderGateway {
     public Pagination<CdbOrder> findAll(final CdbOrderSearchQuery query) {
         final var page = PageRequest.of(
                 query.page(),
-                query.perPage(),
-                Sort.by(Sort.Direction.fromString(query.direction()), "product.name")
+                query.perPage()
         );
-
-        final var customerId = query.customerId().getValue().isEmpty() ? null : query.customerId().getValue();
-        final var productId = query.productId().getValue().isEmpty() ? null : query.productId().getValue();
 
         final var pageResult = this.repository.findAllOrders(
                 SqlUtils.like(SqlUtils.upper(query.terms())),
-                customerId,
-                productId,
+                SqlUtils.nullIfEmpty(query.customerId()),
+                SqlUtils.nullIfEmpty(query.productId()),
                 page
         );
 
@@ -81,6 +76,16 @@ public class CdbOrderMySQLGateway implements CdbOrderGateway {
                 pageResult.getSize(),
                 pageResult.getTotalElements(),
                 pageResult.map(CdbOrderJpaEntity::toAggregate).toList()
+        );
+    }
+
+    @Override
+    public BigDecimal findBalanceByCustomerAndProduct(final CustomerID customerId, final ProductID productId) {
+        return this.repository.findBalanceByCustomerAndProduct(
+                customerId.getValue(),
+                productId.getValue(),
+                CdbOrderTransactionType.PURCHASE,
+                CdbOrderTransactionType.SELL
         );
     }
 

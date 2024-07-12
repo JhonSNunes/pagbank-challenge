@@ -39,15 +39,12 @@ public class ListOrderUseCaseTest {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "";
-        final var expectedSort = "createdAt";
         final var expectedDirection = "asc";
 
         final var query = new CdbOrderSearchQuery(
                 expectedPage,
                 expectedPerPage,
                 expectedTerms,
-                expectedSort,
-                expectedDirection,
                 null,
                 null
         );
@@ -86,15 +83,12 @@ public class ListOrderUseCaseTest {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "";
-        final var expectedSort = "createdAt";
         final var expectedDirection = "asc";
 
         final var query = new CdbOrderSearchQuery(
                 expectedPage,
                 expectedPerPage,
                 expectedTerms,
-                expectedSort,
-                expectedDirection,
                 null,
                 null
         );
