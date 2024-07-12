@@ -14,7 +14,7 @@ public interface CdbOrderGateway {
 
     Optional<CdbOrder> findById(CdbOrderID id);
 
-    Pagination<CdbOrder> findAll(CdbOrderSearchQuery query);
+    Pagination<CdbOrderView> findAll(CdbOrderSearchQuery query);
 
     BigDecimal findBalanceByCustomerAndProduct(CustomerID customerId, ProductID productId);
 }

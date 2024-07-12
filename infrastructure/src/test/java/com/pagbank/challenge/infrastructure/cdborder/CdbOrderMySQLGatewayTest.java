@@ -191,7 +191,7 @@ public class CdbOrderMySQLGatewayTest {
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
-        Assertions.assertEquals(order3.getId(), actualResult.items().getFirst().getId());
+        Assertions.assertEquals(order3.getId().getValue(), actualResult.items().getFirst().orderId());
     }
 
     @Test
@@ -253,7 +253,7 @@ public class CdbOrderMySQLGatewayTest {
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
-        Assertions.assertEquals(order2.getId(), actualResult.items().getFirst().getId());
+        Assertions.assertEquals(order2.getId().getValue(), actualResult.items().getFirst().orderId());
 
         // Page 1
         expectedPage = 1;
@@ -265,7 +265,7 @@ public class CdbOrderMySQLGatewayTest {
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
-        Assertions.assertEquals(order1.getId(), actualResult.items().getFirst().getId());
+        Assertions.assertEquals(order1.getId().getValue(), actualResult.items().getFirst().orderId());
 
         // Page 2
         expectedPage = 2;
@@ -277,7 +277,7 @@ public class CdbOrderMySQLGatewayTest {
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedPerPage, actualResult.items().size());
-        Assertions.assertEquals(order3.getId(), actualResult.items().getFirst().getId());
+        Assertions.assertEquals(order3.getId().getValue(), actualResult.items().getFirst().orderId());
     }
 
     @Test
@@ -321,10 +321,10 @@ public class CdbOrderMySQLGatewayTest {
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedTotal, actualResult.items().size());
-        Assertions.assertEquals(order1.getId(), actualResult.items().getFirst().getId());
-        Assertions.assertEquals(order1.getCustomerId(), actualResult.items().getFirst().getCustomerId());
-        Assertions.assertEquals(order3.getId(), actualResult.items().getLast().getId());
-        Assertions.assertEquals(order3.getCustomerId(), actualResult.items().getLast().getCustomerId());
+        Assertions.assertEquals(order1.getId().getValue(), actualResult.items().getFirst().orderId());
+        Assertions.assertEquals(order1.getCustomerId().getValue(), actualResult.items().getFirst().customerId());
+        Assertions.assertEquals(order3.getId().getValue(), actualResult.items().getLast().orderId());
+        Assertions.assertEquals(order3.getCustomerId().getValue(), actualResult.items().getLast().customerId());
     }
 
     @Test
@@ -368,9 +368,9 @@ public class CdbOrderMySQLGatewayTest {
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedTotal, actualResult.items().size());
-        Assertions.assertEquals(order3.getId(), actualResult.items().getFirst().getId());
-        Assertions.assertEquals(order3.getCustomerId(), actualResult.items().getFirst().getCustomerId());
-        Assertions.assertEquals(order3.getProductId(), actualResult.items().getFirst().getProductId());
+        Assertions.assertEquals(order3.getId().getValue(), actualResult.items().getFirst().orderId());
+        Assertions.assertEquals(order3.getCustomerId().getValue(), actualResult.items().getFirst().customerId());
+        Assertions.assertEquals(order3.getProductId().getValue(), actualResult.items().getFirst().productId());
     }
 
     @Test
@@ -420,13 +420,13 @@ public class CdbOrderMySQLGatewayTest {
         Assertions.assertEquals(expectedPerPage, actualResult.perPage());
         Assertions.assertEquals(expectedTotal, actualResult.total());
         Assertions.assertEquals(expectedTotal, actualResult.items().size());
-        Assertions.assertEquals(order2.getId(), actualResult.items().getFirst().getId());
-        Assertions.assertEquals(order2.getCustomerId(), actualResult.items().getFirst().getCustomerId());
-        Assertions.assertEquals(order2.getProductId(), actualResult.items().getFirst().getProductId());
-        Assertions.assertEquals(order2.getAmount(), actualResult.items().getFirst().getAmount());
-        Assertions.assertEquals(order4.getId(), actualResult.items().getLast().getId());
-        Assertions.assertEquals(order4.getCustomerId(), actualResult.items().getLast().getCustomerId());
-        Assertions.assertEquals(order4.getProductId(), actualResult.items().getFirst().getProductId());
-        Assertions.assertEquals(order4.getAmount(), actualResult.items().getLast().getAmount());
+        Assertions.assertEquals(order2.getId().getValue(), actualResult.items().getFirst().orderId());
+        Assertions.assertEquals(order2.getCustomerId().getValue(), actualResult.items().getFirst().customerId());
+        Assertions.assertEquals(order2.getProductId().getValue(), actualResult.items().getFirst().productId());
+        Assertions.assertEquals(order2.getAmount(), actualResult.items().getFirst().amount());
+        Assertions.assertEquals(order4.getId().getValue(), actualResult.items().getLast().orderId());
+        Assertions.assertEquals(order4.getCustomerId().getValue(), actualResult.items().getLast().customerId());
+        Assertions.assertEquals(order4.getProductId().getValue(), actualResult.items().getFirst().productId());
+        Assertions.assertEquals(order4.getAmount(), actualResult.items().getLast().amount());
     }
 }

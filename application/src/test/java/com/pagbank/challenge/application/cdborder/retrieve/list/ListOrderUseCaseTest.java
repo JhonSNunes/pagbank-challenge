@@ -1,9 +1,9 @@
 package com.pagbank.challenge.application.cdborder.retrieve.list;
 
-import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.cdborder.*;
+import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.pagination.Pagination;
-import com.pagbank.challenge.domain.product.ProductID;
+import com.pagbank.challenge.domain.product.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,15 +49,18 @@ public class ListOrderUseCaseTest {
                 null
         );
 
-        final var customerId1 = CustomerID.unique();
-        final var productId1 = ProductID.unique();
+        final var customer1 = Customer.registerCustomer("José", 25, "masculino", "47 99666952", "Joinville", "Santa Catarina", "Brasil", "Rua Bolinha", "14", "495959595");
+        final var customer2 = Customer.registerCustomer("Maria", 30, "feminino", "47 99666555", "Joinville", "Santa Catarina", "Brasil", "Rua Bolinha", "14", "495959595");
 
-        final var customerId2 = CustomerID.unique();
-        final var productId2 = ProductID.unique();
+        final var product1 = Product.createProduct("CDB 200%", new BigDecimal("200"), true);
+        final var product2 = Product.createProduct("CDB 110%", new BigDecimal("110"), true);
+
+        final var order1 = CdbOrder.createOrder(customer1.getId(), product1.getId(), new BigDecimal("100.50"), CdbOrderTransactionType.SELL);
+        final var order2 = CdbOrder.createOrder(customer2.getId(), product2.getId(), new BigDecimal("569.00"), CdbOrderTransactionType.PURCHASE);
 
         final var products = List.of(
-            CdbOrder.createOrder(customerId1, productId1, new BigDecimal("100.50"), CdbOrderTransactionType.SELL),
-            CdbOrder.createOrder(customerId2, productId2, new BigDecimal("569.00"), CdbOrderTransactionType.PURCHASE)
+                new CdbOrderView(order1, customer1, product1),
+                new CdbOrderView(order2, customer2, product2)
         );
 
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, products.size(), products);
@@ -83,7 +86,6 @@ public class ListOrderUseCaseTest {
         final var expectedPage = 0;
         final var expectedPerPage = 10;
         final var expectedTerms = "";
-        final var expectedDirection = "asc";
 
         final var query = new CdbOrderSearchQuery(
                 expectedPage,
@@ -93,7 +95,7 @@ public class ListOrderUseCaseTest {
                 null
         );
 
-        final var orders = List.<CdbOrder>of();
+        final var orders = List.<CdbOrderView>of();
 
         final var expectedPagination = new Pagination<>(expectedPage, expectedPerPage, orders.size(), orders);
 

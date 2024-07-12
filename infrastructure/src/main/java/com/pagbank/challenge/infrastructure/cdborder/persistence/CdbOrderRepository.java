@@ -1,22 +1,30 @@
 package com.pagbank.challenge.infrastructure.cdborder.persistence;
 
 import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
+import com.pagbank.challenge.domain.cdborder.CdbOrderView;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Repository
 public interface CdbOrderRepository extends JpaRepository<CdbOrderJpaEntity, String> {
     @Query("""
         SELECT
-            cdb
+            new com.pagbank.challenge.domain.cdborder.CdbOrderView(
+                cdb.id,
+                customer.id,
+                customer.name,
+                product.id,
+                product.name,
+                cdb.amount,
+                cdb.transactionDate,
+                cdb.transactionType
+            )
         FROM
             CDBOrder cdb
             inner join Product product on cdb.product.id = product.id 
@@ -29,7 +37,7 @@ public interface CdbOrderRepository extends JpaRepository<CdbOrderJpaEntity, Str
             ( :terms is null OR product.name = :terms )
         ORDER BY product.name ASC, customer.name ASC
     """)
-    Page<CdbOrderJpaEntity> findAllOrders(
+    Page<CdbOrderView> findAllOrders(
             @Param("terms") String terms,
             @Param("customerId") String customerId,
             @Param("productId") String productId,

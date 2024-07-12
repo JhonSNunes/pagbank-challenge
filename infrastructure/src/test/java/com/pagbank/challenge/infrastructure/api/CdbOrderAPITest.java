@@ -12,9 +12,12 @@ import com.pagbank.challenge.application.cdborder.retrieve.list.ListOrderUseCase
 import com.pagbank.challenge.domain.cdborder.CdbOrder;
 import com.pagbank.challenge.domain.cdborder.CdbOrderID;
 import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
+import com.pagbank.challenge.domain.cdborder.CdbOrderView;
+import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.exceptions.NotFoundException;
 import com.pagbank.challenge.domain.pagination.Pagination;
+import com.pagbank.challenge.domain.product.Product;
 import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.domain.validation.Error;
 import com.pagbank.challenge.domain.validation.handler.Notification;
@@ -279,9 +282,13 @@ public class CdbOrderAPITest {
         final var expectedItemsCount = 1;
         final var expectedTotal = 1;
 
-        final var order = CdbOrder.createOrder(CustomerID.unique(), ProductID.unique(), new BigDecimal("201.5"), CdbOrderTransactionType.PURCHASE);
+        final var customer1 = Customer.registerCustomer("José", 25, "masculino", "47 99666952", "Joinville", "Santa Catarina", "Brasil", "Rua Bolinha", "14", "495959595");
+        final var product1 = Product.createProduct("CDB 200%", new BigDecimal("200"), true);
+        final var order = CdbOrder.createOrder(customer1.getId(), product1.getId(), new BigDecimal("100.50"), CdbOrderTransactionType.SELL);
 
-        final var expectedItems = List.of(ListOrderOutput.from(order));
+        final var orderView = new CdbOrderView(order, customer1, product1);
+
+        final var expectedItems = List.of(ListOrderOutput.from(orderView));
 
         Mockito.when(listOrderUseCase.execute(any()))
                 .thenReturn(new Pagination<>(expectedPage, expectedPerPage, expectedTotal, expectedItems));
@@ -303,9 +310,9 @@ public class CdbOrderAPITest {
                 .andExpect(jsonPath("$.perPage", equalTo(expectedPerPage)))
                 .andExpect(jsonPath("$.total", equalTo(expectedTotal)))
                 .andExpect(jsonPath("$.items", hasSize(expectedItemsCount)))
-                .andExpect(jsonPath("$.items[0].id.value", equalTo(order.getId().getValue())))
-                .andExpect(jsonPath("$.items[0].customerId.value", equalTo(order.getCustomerId().getValue())))
-                .andExpect(jsonPath("$.items[0].productId.value", equalTo(order.getProductId().getValue())))
+                .andExpect(jsonPath("$.items[0].id", equalTo(order.getId().getValue())))
+                .andExpect(jsonPath("$.items[0].customerId", equalTo(order.getCustomerId().getValue())))
+                .andExpect(jsonPath("$.items[0].productId", equalTo(order.getProductId().getValue())))
                 .andExpect(jsonPath("$.items[0].amount", Matchers.notNullValue()))
                 .andExpect(jsonPath("$.items[0].transactionDate", equalTo(order.getTransactionDate().toString())))
                 .andExpect(jsonPath("$.items[0].transactionType", equalTo(order.getTransactionType().toString())));

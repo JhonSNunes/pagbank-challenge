@@ -58,7 +58,7 @@ public class CdbOrderMySQLGateway implements CdbOrderGateway {
     }
 
     @Override
-    public Pagination<CdbOrder> findAll(final CdbOrderSearchQuery query) {
+    public Pagination<CdbOrderView> findAll(final CdbOrderSearchQuery query) {
         final var page = PageRequest.of(
                 query.page(),
                 query.perPage()
@@ -75,7 +75,7 @@ public class CdbOrderMySQLGateway implements CdbOrderGateway {
                 pageResult.getNumber(),
                 pageResult.getSize(),
                 pageResult.getTotalElements(),
-                pageResult.map(CdbOrderJpaEntity::toAggregate).toList()
+                pageResult.toList()
         );
     }
 
