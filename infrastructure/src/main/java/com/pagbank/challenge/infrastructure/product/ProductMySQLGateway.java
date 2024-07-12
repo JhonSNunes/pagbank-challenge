@@ -71,6 +71,11 @@ public class ProductMySQLGateway implements ProductGateway {
         );
     }
 
+    @Override
+    public Boolean findIsActive(ProductID id) {
+        return this.repository.findIsActive(id.getValue());
+    }
+
     private Product save(final Product product) {
         return this.repository.save(ProductJpaEntity.from(product)).toAggregate();
     }

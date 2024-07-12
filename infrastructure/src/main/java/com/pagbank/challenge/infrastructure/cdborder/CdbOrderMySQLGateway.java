@@ -5,6 +5,7 @@ import com.pagbank.challenge.domain.customer.Customer;
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.exceptions.NotFoundException;
 import com.pagbank.challenge.domain.pagination.Pagination;
+import com.pagbank.challenge.domain.product.Product;
 import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.infrastructure.cdborder.persistence.CdbOrderJpaEntity;
 import com.pagbank.challenge.infrastructure.cdborder.persistence.CdbOrderRepository;
@@ -19,7 +20,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -99,7 +99,7 @@ public class CdbOrderMySQLGateway implements CdbOrderGateway {
 
         final var storageProduct = productMySQLGateway
                 .findById(productId)
-                .orElseThrow(() -> NotFoundException.with(Customer.class, productId));
+                .orElseThrow(() -> NotFoundException.with(Product.class, productId));
 
         final var customerJpaEntity = CustomerJpaEntity.from(storageCustomer);
         final var productJpaEntity = ProductJpaEntity.from(storageProduct);

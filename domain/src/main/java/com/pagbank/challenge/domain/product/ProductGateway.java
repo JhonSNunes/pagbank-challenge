@@ -14,4 +14,6 @@ public interface ProductGateway {
     Optional<Product> findById(ProductID id);
 
     Pagination<Product> findAll(ProductSearchQuery query);
+
+    Boolean findIsActive(ProductID id);
 }

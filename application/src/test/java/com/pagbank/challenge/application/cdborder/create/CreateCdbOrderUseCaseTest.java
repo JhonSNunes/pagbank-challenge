@@ -4,6 +4,7 @@ import com.pagbank.challenge.domain.cdborder.CdbOrderTransactionType;
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.cdborder.CdbOrderGateway;
 import com.pagbank.challenge.domain.exceptions.DomainException;
+import com.pagbank.challenge.domain.product.ProductGateway;
 import com.pagbank.challenge.domain.product.ProductID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,9 +34,13 @@ public class CreateCdbOrderUseCaseTest {
     @Mock
     private CdbOrderGateway cdbOrderGateway;
 
+    @Mock
+    private ProductGateway productGateway;
+
     @BeforeEach
     void cleanUp() {
         Mockito.reset(cdbOrderGateway);
+        Mockito.reset(productGateway);
     }
 
     @Test
@@ -52,6 +57,9 @@ public class CreateCdbOrderUseCaseTest {
                     expectedTransactionType
             );
 
+            when(productGateway.findIsActive(any()))
+                .thenReturn(true);
+
             when(cdbOrderGateway.create(any()))
                     .thenAnswer(returnsFirstArg());
 
@@ -67,6 +75,30 @@ public class CreateCdbOrderUseCaseTest {
                                 && Objects.nonNull(entity.getId());
                     }
             ));
+    }
+
+    @Test
+    public void givenAValidCommand_whenCallsPurchaseInactiveOrder_shouldThrowDomainException() {
+        final var expectedAmount = new BigDecimal("101453.00");
+        final var expectedCustomerId = CustomerID.unique();
+        final var expectedProductId = ProductID.unique();
+        final var expectedTransactionType = CdbOrderTransactionType.PURCHASE;
+        final var exceptionMessage = "Product must be active to be purchased!";
+
+        final var command = CreateCdbOrderCommand.with(
+                expectedCustomerId.getValue(),
+                expectedProductId.getValue(),
+                expectedAmount,
+                expectedTransactionType
+        );
+
+        when(productGateway.findIsActive(any()))
+                .thenReturn(false);
+
+        final var exception = Assertions.assertThrows(DomainException.class, () -> useCase.execute(command));
+
+        Assertions.assertEquals(exceptionMessage, exception.getMessage());
+        Mockito.verify(cdbOrderGateway, times(0)).create(any());
     }
 
     @Test

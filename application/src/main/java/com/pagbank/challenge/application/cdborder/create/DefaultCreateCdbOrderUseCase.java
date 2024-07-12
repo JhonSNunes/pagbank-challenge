@@ -5,6 +5,7 @@ import com.pagbank.challenge.domain.cdborder.CdbOrder;
 import com.pagbank.challenge.domain.cdborder.CdbOrderGateway;
 import com.pagbank.challenge.domain.customer.CustomerID;
 import com.pagbank.challenge.domain.exceptions.DomainException;
+import com.pagbank.challenge.domain.product.ProductGateway;
 import com.pagbank.challenge.domain.product.ProductID;
 import com.pagbank.challenge.domain.validation.Error;
 import com.pagbank.challenge.domain.validation.handler.Notification;
@@ -19,8 +20,11 @@ public class DefaultCreateCdbOrderUseCase extends CreateCdbOrderUseCase {
 
     private final CdbOrderGateway cdbOrderGateway;
 
-    public DefaultCreateCdbOrderUseCase(final CdbOrderGateway cdbOrderGateway) {
+    private final ProductGateway productGateway;
+
+    public DefaultCreateCdbOrderUseCase(final CdbOrderGateway cdbOrderGateway, final ProductGateway productGateway) {
         this.cdbOrderGateway = Objects.requireNonNull(cdbOrderGateway);
+        this.productGateway = Objects.requireNonNull(productGateway);
     }
 
     @Override
@@ -29,14 +33,6 @@ public class DefaultCreateCdbOrderUseCase extends CreateCdbOrderUseCase {
 
         final var customerId = CustomerID.from(command.customerId());
         final var productId = ProductID.from(command.productId());
-
-        if (command.transactionType().isSell()) {
-            final var amountOfProduct = cdbOrderGateway.findBalanceByCustomerAndProduct(customerId, productId);
-
-            if (amountOfProduct != null && amountOfProduct.compareTo(command.amount()) < 0 ) {
-                throw DomainException.with(new Error("You don't have balance with this product to sell this amount value"));
-            }
-        }
 
         final var order = CdbOrder.createOrder(
                 customerId,
@@ -47,7 +43,21 @@ public class DefaultCreateCdbOrderUseCase extends CreateCdbOrderUseCase {
 
         order.validate(notification);
 
-        return notification.hasError() ? Left(notification) : create(order);
+        if (notification.hasError()) {
+            return Left(notification);
+        }
+
+        if (command.transactionType().isSell()) {
+            final var amountOfProduct = cdbOrderGateway.findBalanceByCustomerAndProduct(customerId, productId);
+
+            if (amountOfProduct != null && amountOfProduct.compareTo(command.amount()) < 0 ) {
+                throw DomainException.with(new Error("You don't have balance with this product to sell this amount value"));
+            }
+        } else if (!this.productGateway.findIsActive(productId)) {
+            throw DomainException.with(new Error("Product must be active to be purchased!"));
+        }
+
+        return create(order);
     }
 
     private Either<Notification, CdbOrderOutput> create(final CdbOrder order) {

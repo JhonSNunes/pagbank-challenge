@@ -40,7 +40,7 @@ public class OrderTest {
         final var expectedAmount = new BigDecimal("1045.35");
         final var expectedTransactionType = CdbOrderTransactionType.SELL;
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'customerId' should not be null";
+        final var expectedErrorMessage = "'customerId' should not be null or empty";
 
         final var order = CdbOrder.createOrder(
                 expectedCustomer,
@@ -66,7 +66,7 @@ public class OrderTest {
         final var expectedAmount = new BigDecimal("1045.35");
         final var expectedTransactionType = CdbOrderTransactionType.PURCHASE;
         final var expectedErrorCount = 1;
-        final var expectedErrorMessage = "'productId' should not be null";
+        final var expectedErrorMessage = "'productId' should not be null or empty";
 
         final var order = CdbOrder.createOrder(
                 expectedCustomer,

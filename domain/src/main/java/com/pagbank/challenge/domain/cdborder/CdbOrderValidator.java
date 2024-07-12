@@ -15,13 +15,13 @@ public class CdbOrderValidator extends Validator {
 
     @Override
     public void validate() {
-        if (this.order.getCustomerId() == null) {
-            this.validationHandler().append(new Error("'customerId' should not be null"));
+        if (this.order.getCustomerId() == null || this.order.getCustomerId().getValue().isEmpty()) {
+            this.validationHandler().append(new Error("'customerId' should not be null or empty"));
             return;
         }
 
-        if (this.order.getProductId() == null) {
-            this.validationHandler().append(new Error("'productId' should not be null"));
+        if (this.order.getProductId() == null || this.order.getProductId().getValue().isEmpty()) {
+            this.validationHandler().append(new Error("'productId' should not be null or empty"));
             return;
         }
 
